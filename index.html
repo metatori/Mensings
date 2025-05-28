@@ -1,0 +1,30 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mensings - 실시간 특가</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>Mensings</h1>
+    <p class="subtitle">쿠팡 실시간 특가 모음</p>
+    <input type="text" placeholder="지금 특가 상품 검색하기" onclick="goSearch()" />
+  </header>
+  <main>
+    <div class="banner">🎯 오늘만 특가! 타임딜 확인하세요</div>
+    <div class="banner highlight">🔥 오늘의 베스트 할인 상품</div>
+    <div class="item">샤오미 무선청소기 - <span class="discount">50%</span> 할인</div>
+    <div class="item">삼성 갤럭시버즈 - <span class="discount">30%</span> 할인</div>
+    <div class="item">나이키 샌들 - <span class="discount">20%</span> 할인</div>
+  </main>
+  <footer>
+    <button>홈</button>
+    <button onclick="goSearch()">검색</button>
+    <button>마이</button>
+  </footer>
+  <script src="script.js"></script>
+</body>
+</html>
