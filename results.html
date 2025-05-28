@@ -2,35 +2,26 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <title>Mensings 검색결과</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>검색 결과 - Mensings</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    <header>
-        <div class="header-left"><a href="search.html">←</a> 검색결과</div>
-        <div class="header-right">
-            <input type="text" placeholder="검색어를 입력하세요" onkeypress="handleSearch(event)">
-        </div>
-    </header>
-    <main>
-        <section class="products">
-            <div class="product">[할인 40%] 아이폰 케이스</div>
-            <div class="product">[할인 35%] LG 모니터</div>
-            <div class="product">[할인 60%] 여름용 린넨셔츠</div>
-        </section>
-    </main>
-    <footer>
-        <div class="footer-button"><a href="index.html">홈</a></div>
-        <div class="footer-button"><a href="search.html">검색</a></div>
-        <div class="footer-button">마이</div>
-    </footer>
-    <script>
-    function handleSearch(e) {
-        if (e.key === 'Enter') {
-            window.location.href = "results.html";
-        }
-    }
-    </script>
+  <header>
+    <button onclick="goSearch()">&larr;</button>
+    <h2>검색 결과</h2>
+  </header>
+  <main>
+    <div class="item">[🔥] 인기상품 A - 40% 할인</div>
+    <div class="item">[🔥] 인기상품 B - 35% 할인</div>
+    <div class="item">[🔥] 인기상품 C - 25% 할인</div>
+  </main>
+  <footer>
+    <button onclick="goHome()">홈</button>
+    <button onclick="goSearch()">검색</button>
+    <button>마이</button>
+  </footer>
+  <script src="script.js"></script>
 </body>
 </html>
