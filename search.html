@@ -1,0 +1,32 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Mensings 검색</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="header-left"><a href="index.html">←</a> 검색</div>
+        <div class="header-right">
+            <input type="text" placeholder="검색어를 입력하세요" onkeypress="handleSearch(event)">
+        </div>
+    </header>
+    <main>
+        <section class="highlight">🔥 인기 검색어: 선풍기, 냉장고, 무선청소기</section>
+    </main>
+    <footer>
+        <div class="footer-button"><a href="index.html">홈</a></div>
+        <div class="footer-button">검색</div>
+        <div class="footer-button">마이</div>
+    </footer>
+    <script>
+    function handleSearch(e) {
+        if (e.key === 'Enter') {
+            window.location.href = "results.html";
+        }
+    }
+    </script>
+</body>
+</html>
