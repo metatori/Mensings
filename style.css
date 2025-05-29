@@ -1,17 +1,23 @@
 
 body {
-    font-family: '맑은 고딕', sans-serif;
-    text-align: center;
-    background-color: #f4f4f4;
-    margin-top: 100px;
+  font-family: '맑은 고딕', sans-serif;
+  text-align: center;
+  background-color: #f4f4f4;
+  margin-top: 100px;
 }
 input {
-    padding: 10px;
-    width: 200px;
+  padding: 10px;
+  width: 200px;
 }
 button {
-    padding: 10px;
+  padding: 10px;
 }
 #result {
-    margin-top: 20px;
+  margin-top: 20px;
+}
+.item {
+  border: 1px solid #ccc;
+  margin: 10px;
+  padding: 10px;
+  background: #fff;
 }

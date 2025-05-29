@@ -1,37 +1,45 @@
-const fetch = require('node-fetch');
-const crypto = require('crypto');
 
-exports.handler = async function(event) {
-  const keyword = event.queryStringParameters.query || '';
-  const accessKey = process.env.accessKey;
-  const secretKey = process.env.secretKey;
-  const apiUrl = `https://api-gateway.coupang.com/v2/providers/affiliate_open_api/apis/openapi/v1/products/search?keyword=${encodeURIComponent(keyword)}&limit=5`;
+async function searchProduct() {
+  const keyword = document.getElementById("searchInput").value;
+  document.getElementById("result").innerText = "검색 중...";
 
-  const datetime = new Date().toISOString().replace(/[-:]/g, '').split('.')[0];
-  const method = 'GET';
-  const path = `/v2/providers/affiliate_open_api/apis/openapi/v1/products/search`;
+  try {
+    const response = await fetch(`https://api-gateway.coupang.com/v2/providers/affiliate_open_api/apis/openapi/v1/products/search?keyword=${encodeURIComponent(keyword)}&limit=3`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": getAuthorizationHeader(),
+        "X-Coupang-Partner": "affiliate"
+      }
+    });
 
-  const message = `${method} ${path}
-${datetime}
-${accessKey}`;
-  const signature = crypto.createHmac('sha256', secretKey).update(message).digest('hex');
+    const data = await response.json();
+    if (!data || !data.data || !data.data.productData) {
+      document.getElementById("result").innerText = "검색 결과 없음.";
+      return;
+    }
 
-  const headers = {
-    'Authorization': `CEA algorithm=HmacSHA256, access-key=${accessKey}, signed-date=${datetime}, signature=${signature}`,
-    'Content-Type': 'application/json'
-  };
+    const resultBox = document.getElementById("result");
+    resultBox.innerHTML = "";
+    data.data.productData.forEach(item => {
+      const html = `
+        <div class="item">
+          <img src="${item.productImage}" width="100"><br>
+          <strong>${item.productName}</strong><br>
+          가격: ${item.productPrice}원<br>
+          <a href="${item.productUrl}" target="_blank">상품 보기</a>
+        </div>`;
+      resultBox.innerHTML += html;
+    });
 
-  const response = await fetch(apiUrl, { headers });
-  const result = await response.json();
+  } catch (error) {
+    console.error("API 호출 실패:", error);
+    document.getElementById("result").innerText = "API 호출 실패";
+  }
+}
 
-  const items = result.productData.map(product => ({
-    title: product.productName,
-    price: product.productPrice,
-    link: product.productUrl
-  }));
-
-  return {
-    statusCode: 200,
-    body: JSON.stringify(items)
-  };
-};
+function getAuthorizationHeader() {
+  const accessKey = import.meta.env.VITE_COUPANG_ACCESS_KEY || '';
+  const secretKey = import.meta.env.VITE_COUPANG_SECRET_KEY || '';
+  return `CEA ${accessKey}:${secretKey}`;
+}
