@@ -4,30 +4,23 @@ async function searchProduct() {
   document.getElementById("result").innerText = "검색 중...";
 
   try {
-    const response = await fetch(`https://api-gateway.coupang.com/v2/providers/affiliate_open_api/apis/openapi/v1/products/search?keyword=${encodeURIComponent(keyword)}&limit=3`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": getAuthorizationHeader(),
-        "X-Coupang-Partner": "affiliate"
-      }
-    });
-
+    const response = await fetch(`/.netlify/functions/searchCoupang?query=${encodeURIComponent(keyword)}`);
     const data = await response.json();
-    if (!data || !data.data || !data.data.productData) {
+
+    if (!data || !data.length) {
       document.getElementById("result").innerText = "검색 결과 없음.";
       return;
     }
 
     const resultBox = document.getElementById("result");
     resultBox.innerHTML = "";
-    data.data.productData.forEach(item => {
+    data.forEach(item => {
       const html = `
         <div class="item">
-          <img src="${item.productImage}" width="100"><br>
-          <strong>${item.productName}</strong><br>
-          가격: ${item.productPrice}원<br>
-          <a href="${item.productUrl}" target="_blank">상품 보기</a>
+          <img src="${item.image}" width="100"><br>
+          <strong>${item.title}</strong><br>
+          가격: ${item.price}원<br>
+          <a href="${item.link}" target="_blank">상품 보기</a>
         </div>`;
       resultBox.innerHTML += html;
     });
@@ -36,10 +29,4 @@ async function searchProduct() {
     console.error("API 호출 실패:", error);
     document.getElementById("result").innerText = "API 호출 실패";
   }
-}
-
-function getAuthorizationHeader() {
-  const accessKey = import.meta.env.VITE_COUPANG_ACCESS_KEY || '';
-  const secretKey = import.meta.env.VITE_COUPANG_SECRET_KEY || '';
-  return `CEA ${accessKey}:${secretKey}`;
 }
