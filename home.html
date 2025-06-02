@@ -3,10 +3,22 @@
 <html>
 <head>
     <title>Lotto Home</title>
+    <script>
+        async function checkAttendance() {
+            const userId = "test_user";  // 임시 사용자 아이디 (실제론 로그인시 받아옴)
+            const response = await fetch('http://localhost:5000/attendance', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ user_id: userId })
+            });
+            const data = await response.json();
+            alert(data.message + " | 현재 포인트: " + data.points);
+        }
+    </script>
 </head>
 <body>
     <h1>Welcome to Lotto System</h1>
-    <button>출석 체크</button>
+    <button onclick="checkAttendance()">출석 체크</button>
     <button>번호 생성</button>
     <button>통계실</button>
     <button>분석실</button>
